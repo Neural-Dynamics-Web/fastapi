@@ -649,7 +649,7 @@ class APIRouter(routing.Router):
         self, path: str, endpoint: Callable[..., Any], name: Optional[str] = None
     ) -> None:
         route = APIWebSocketRoute(
-            self.path + path,
+            self.prefix + path,
             endpoint=endpoint,
             name=name,
             dependency_overrides_provider=self.dependency_overrides_provider,
@@ -660,7 +660,7 @@ class APIRouter(routing.Router):
         self, path: str, name: Optional[str] = None
     ) -> Callable[[DecoratedCallable], DecoratedCallable]:
         def decorator(func: DecoratedCallable) -> DecoratedCallable:
-            self.add_api_websocket_route(self.path + path, func, name=name)
+            self.add_api_websocket_route(self.prefix + path, func, name=name)
             return func
 
         return decorator
